@@ -76,66 +76,59 @@ module.exports = class BinarySearchTree {
     }
 
     remove(data) {
-        del(data, this.rootTree);
-        // let prev = null;
-        function del(v, node, prev = null) {
+
+        this.rootTree = del(data, this.rootTree);
+
+        function del(v, node) {
             if (node == null) {
                 return null;
-            } else if (node.data == v) {
+            }
+            if (node.data < v) {
+                node.right = del(v, node.right);
+                return node;
+            } else if (node.data > v) {
+                node.left = del(v, node.left);
+                return node;
+            } else {
                 if (node.left == null && node.right == null) {
-                    if (prev == null) {
-                        node = null;
-                    } else {
-                        prev = null;
-                    }
+                    return null;
                 } else if (node.left == null) {
-                    prev = node.right;
+                    node = node.right;
+                    return node;
                 } else if (node.right == null) {
-                    prev = node.left;
+                    node = node.left;
+                    return node;
                 } else {
-
-                    let min = node.right,
-                        prev2;
-                    let node2 = node.right;
-                    while (node2) {
-                        prev2 = min;
-                        min = node2;
-                        node2 = node2.left;
+                    let min = node.right;
+                    while (min.left) {
+                        min = min.left;
                     }
-                    prev2.left = node2.right;
-                    prev = node2;
-                    node2.right = node.right;
-                    node2.left = node.left;
-
-
-
-
-                    return min;
+                    node.data = min.data;
+                    node.right = del(min.data, node.right);
+                    return node;
                 }
             }
         }
+
+
     }
 
     min() {
         if (this.rootTree == null) return null;
-        let min = null;
         let node = this.rootTree;
-        while (node) {
-            min = node.data;
+        while (node.left) {
             node = node.left;
         }
-        return min;
+        return node.data;
     }
 
     max() {
         if (this.rootTree == null) return null;
-        let max = null;
         let node = this.rootTree;
-        while (node) {
-            max = node.data;
+        while (node.right) {
             node = node.right;
         }
-        return max;
+        return node.data;
     }
 
 }

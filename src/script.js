@@ -8,15 +8,15 @@ class Node {
 
 class BinarySearchTree {
     constructor() {
-        this.root = null;
+        this.rootTree = null;
     }
 
     root() {
-        return this.root;
+        return this.rootTree;
     }
 
     add(data) {
-        this.root = addV(data, this.root);
+        this.rootTree = addV(data, this.rootTree);
 
         function addV(v, node) {
             if (node == null) {
@@ -33,7 +33,7 @@ class BinarySearchTree {
     }
 
     has(data) {
-        return check(data, this.root);
+        return check(data, this.rootTree);
 
         function check(v, node) {
             if (node == null) {
@@ -50,7 +50,7 @@ class BinarySearchTree {
     }
 
     find(data) {
-        return find(data, this.root);
+        return find(data, this.rootTree);
 
         function find(v, node) {
             if (node == null) {
@@ -66,58 +66,59 @@ class BinarySearchTree {
         }
     }
 
-    remove(data) {
-        del(data, this.root);
-        // let prev = null;
-        function del(v, node, prev = null) {
-            if (node == null) {
-                return null;
-            } else if (node.data == v) {
-                if (node.left == null && node.right == null) {
-                    if (prev == null) {
-                        node = null;
-                    } else {
-                        prev = null;
-                    }
-                } else if (node.left == null) {
-                    prev = node.right;
-                } else if (node.right == null) {
-                    prev = node.left;
-                } else {
+    // remove2(data) {
 
-                }
+    //     this.rootTree = del(data, this.rootTree);
+
+    //     function del(v, node) {
+    //         if (node == null) {
+    //             return null;
+    //         }
+    //         if (node.data < v) {
+    //             node.right = del(v, node.right);
+    //         } else if (node.data > v) {
+    //             node.left = del(v, node.left);
+    //         } else {
+    //             if (node.left == null && node.right == null) {
+    //                 return null;
+    //             } else if (node.left == null) {
+    //                 node = node.right;
+    //                 return node;
+    //             } else if (node.right == null) {
+    //                 node = node.left;
+    //                 return node;
+    //             } else {
+    //                 let min = node.right;
+    //                 while (min.left) {
+    //                     min = min.left;
+    //                 }
+    //                 node.data = min.data;
+    //                 node.right = del(min.data, node.right);
+    //                 return node;
+    //             }
+    //         }
+    //     }
 
 
-
-            } else if (node.data > v) {
-                return del(v, node.left);
-            } else {
-                return del(v, node.right);
-            }
-
-        }
-    }
+    // }
 
     min() {
-        if (this.root == null) return null;
-        let min = null;
-        let node = this.root;
-        while (node) {
-            min = node.data;
+        if (this.rootTree == null) return null;
+        let node = this.rootTree;
+        while (node.left) {
             node = node.left;
         }
-        return min;
+
+        return node.data;
     }
 
     max() {
-        if (this.root == null) return null;
-        let max = null;
-        let node = this.root;
-        while (node) {
-            max = node.data;
-            node = node.right;
+        if (this.rootTree == null) return null;
+        let node2 = this.rootTree;
+        while (node2.right) {
+            node2 = node2.right;
         }
-        return max;
+        return node2.data;
     }
 
 }
@@ -131,3 +132,5 @@ tree.add(3);
 tree.add(4);
 console.log(tree.min());
 console.log(tree.max());
+// tree.remove(3);
+console.log(tree.root());
